@@ -1,37 +1,50 @@
 from turtle import Turtle
 
+PALETTE = ['brown', 'red', 'orange', 'green', 'yellow']
+
 
 class Bricks:
 
     def __init__(self):
+        self.x = -420
+        self.y = 260
         self.brick_ls = []
         self.bake()
         self.arrange_obj()
 
-    def create_bricks(self):
+    def create_bricks(self, color):
         obj = Turtle()
         obj.penup()
         obj.shape('square')
-        obj.color('red')
-        obj.shapesize(stretch_wid=1, stretch_len=4)
+        obj.color(color)
+        obj.shapesize(stretch_wid=1, stretch_len=5)
         self.brick_ls.append(obj)
 
     def bake(self):
-        for n in range(16):
-            self.create_bricks()
+        x = 0
+        for n in range(64):
+            if n % 16 == 0:
+                x += 1
+
+            self.create_bricks(PALETTE[x])
+
+    def positioning(self):
+        self.x = -420
+        self.y = self.y - 30
 
     def arrange_obj(self):
-        x = -420
-        y = 280
         for ob in range(0, len(self.brick_ls)):
-            if ob == 8:
-                x = -420
-                y = 250
-            elif ob == 15:
-                x = 420
-                y = 250
-            self.brick_ls[ob].goto(x, y)
 
-            x += 120
+            if ob % 8 == 0:
+                print(ob)
+                self.positioning()
 
+            self.brick_ls[ob].goto(self.x, self.y)
 
+            self.x += 120
+
+    def remove_brick(self, m):
+        for n in self.brick_ls:
+
+            if m == n:
+                self.brick_ls.remove(n)

@@ -15,6 +15,7 @@ paddle = Paddle()
 ball = Ball()
 # Create Breaks
 bricks = Bricks()
+# print(len(bricks.brick_ls))
 
 
 screen.listen()
@@ -41,5 +42,12 @@ while game_on:
 
     if ball.distance(paddle) < 90 and ball.ycor() < -255:
         ball.bounce_y()
+
+    # detect collision with bricks
+    for brick in bricks.brick_ls:
+        if ball.distance(brick) < 50:
+            brick.hideturtle()
+            bricks.brick_ls.remove(brick)
+            ball.bounce_y()
 
 screen.exitonclick()
