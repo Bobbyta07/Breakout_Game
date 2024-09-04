@@ -35,7 +35,7 @@ class Bricks:
     def arrange_obj(self):
         for ob in range(0, len(self.brick_ls)):
 
-            if ob % 8 == 0:g
+            if ob % 8 == 0:
                 self.positioning()
 
             self.brick_ls[ob].goto(self.x, self.y)
