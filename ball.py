@@ -1,4 +1,5 @@
 from turtle import Turtle
+import random
 
 
 class Ball(Turtle):
@@ -18,7 +19,15 @@ class Ball(Turtle):
         self.goto(new_x, new_y)
 
     def bounce_y(self):
+        x_mix = [-1, 1]
+        sel_x = random.choice(x_mix)
+        self.x_move *= sel_x
+
         self.y_move *= -1
 
     def bounce_x(self):
+        self.x_move *= -1
+
+    def reset_ball_position(self):
+        self.goto(0, 0)
         self.x_move *= -1

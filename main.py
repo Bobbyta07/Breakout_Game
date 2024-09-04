@@ -3,6 +3,7 @@ from random import random
 from paddle import Paddle
 from ball import Ball
 from bricks import Bricks
+from score_board import ScoreBoard
 import time
 
 game_on = False
@@ -15,7 +16,10 @@ paddle = Paddle()
 ball = Ball()
 # Create Breaks
 bricks = Bricks()
-# print(len(bricks.brick_ls))
+
+#   score board object
+
+score_board = ScoreBoard()
 
 
 screen.listen()
@@ -26,7 +30,7 @@ if paddle:
     game_on = True
 
 while game_on:
-    time.sleep(0.1)
+    time.sleep(0.07)
     # move ball
     ball.move_ball()
     screen.update()
@@ -48,6 +52,22 @@ while game_on:
         if ball.distance(brick) < 50:
             brick.hideturtle()
             bricks.brick_ls.remove(brick)
+            score_board.count_score()
             ball.bounce_y()
+
+    # detect when the paddle misses the Ball
+    if ball.ycor() < -290:
+        time.sleep(1)
+        score_board.subtract_life()
+        ball.reset_ball_position()
+
+    # end game
+    if score_board.life == 0:
+        time.sleep(1)
+        ball.hideturtle()
+        for brick in bricks.brick_ls:
+            brick.hideturtle()
+        score_board.game_over()
+        game_on = False
 
 screen.exitonclick()
